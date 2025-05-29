@@ -181,7 +181,6 @@ func editData (A *ootd, n *int) {
 			i = *n 
 			}
 		}
-		fmt.Println(*n)
 		if found {
 			fmt.Printf("Item '%s' berhasil dihapus.\n", target)
 			fmt.Printf("Total item setelah dihapus : %d\n", *n)
