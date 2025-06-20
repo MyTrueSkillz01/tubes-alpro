@@ -73,13 +73,13 @@ func main(){
 func inputData(A *ootd, n *int){
 	var tambah int
 	fmt.Println("Berapa banyak item yang akan ditambahkan?")
+	fmt.Println("Nama item(gunakan _ jika lebih dari 2 kata), Kategori(Atasan/Bawahan/Sepatu), Dan Acara(Formal/Kasual/Pesta): ")
 	fmt.Scan(&tambah) 
 	for i := 0; i < tambah; i++{
-		fmt.Println("Nama item(gunakan _ jika lebih dari 2 kata), Kategori(Atasan/Bawahan/Sepatu), Dan Acara(Formal/Kasual/Pesta): ")
 		fmt.Scan(&A[*n].nama, &A[*n].kategori, &A[*n].acara)
-		fmt.Println("Input berhasil 😊")
 		*n++
 	}
+	fmt.Println("Input berhasil 😊")
 	fmt.Printf("Total item sekarang : %d\n", *n)
 }
 
@@ -145,7 +145,8 @@ func urutData(A *ootd, n int) {
 
 func rekomendasi(A ootd, n int) {
 	var targetAcara string
-	var ditemukan bool = false
+	var atasanShown, bawahanShown, sepatuShown bool
+	var i int
 
 	fmt.Print("Masukkan jenis acara (cth: Formal, Kasual, Pesta): ")
 	fmt.Scan(&targetAcara)
@@ -159,15 +160,20 @@ func rekomendasi(A ootd, n int) {
 	fmt.Println()
 
 
-	for i := 0; i < n; i++ {
+	for i < n && !(atasanShown && bawahanShown && sepatuShown) {
 		if A[i].acara == targetAcara {
-			fmt.Printf("%-20s %-15s %-15s\n", A[i].nama, A[i].kategori, A[i].acara)
-			ditemukan = true
+			if A[i].kategori == "Atasan" && !atasanShown {
+				fmt.Printf("%-20s %-15s %-15s\n", A[i].nama, A[i].kategori, A[i].acara)
+				atasanShown = true
+			} else if A[i].kategori == "Bawahan" && !bawahanShown {
+				fmt.Printf("%-20s %-15s %-15s\n", A[i].nama, A[i].kategori, A[i].acara)
+				bawahanShown = true
+			} else if A[i].kategori == "Sepatu" && !sepatuShown {
+				fmt.Printf("%-20s %-15s %-15s\n", A[i].nama, A[i].kategori, A[i].acara)
+				sepatuShown = true
+			}
 		}
-	}
-
-	if !ditemukan {
-		fmt.Printf("Tidak ditemukan item yang cocok untuk acara '%s'.\n", targetAcara)
+		i++
 	}
 }
 
