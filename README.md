@@ -1,7 +1,7 @@
 👗👕 OOTD Planner 👖👟
-Aplikasi manajemen outfit harianmu! ✨
+Aplikasi manajemen outfit harian! ✨
 
-Tentang Aplikasi
+
 OOTD Planner adalah aplikasi sederhana berbasis konsol yang dirancang untuk membantu Anda mengelola koleksi pakaian Anda dan mendapatkan rekomendasi outfit berdasarkan acara. Dengan aplikasi ini, Anda dapat dengan mudah:
 
 1. Menambahkan item fashion baru ke koleksi Anda (misalnya, atasan, bawahan, sepatu).
