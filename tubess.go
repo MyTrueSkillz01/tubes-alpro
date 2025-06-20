@@ -17,6 +17,30 @@ func main(){
 	var pilih int
 	
 	selesai := false
+	fmt.Println("=======================================")
+	fmt.Println("    👗👕 WELCOME TO OOTD PLANNER 👖👟  ")
+	fmt.Println("=======================================")
+	fmt.Println("        /\\             /\\")
+    fmt.Println("       /  \\___________/  \\")
+    fmt.Println("      /   /           \\   \\")
+    fmt.Println("     /   /             \\   \\")
+    fmt.Println("    /   /|             |\\   \\")
+    fmt.Println("   /   / |             | \\   \\")
+    fmt.Println("  /___/  |             |  \\___\\")
+    fmt.Println("  |  |   |     o o     |   |  |")
+    fmt.Println("  |  |   |             |   |  |")
+    fmt.Println("  |  |   |     o o     |   |  |")
+    fmt.Println("  |__|   |_____________|   |__|")
+    fmt.Println("        /               \\")
+    fmt.Println("       /_________________\\")
+	fmt.Println("=======================================")
+	fmt.Println("✨ Aplikasi manajemen outfit harianmu ✨")
+
+	fmt.Println("📅 Buat, simpan, dan atur gaya kamu setiap hari!")
+
+	fmt.Println("Memuat aplikasi...")
+
+	fmt.Println("\n✅ Siap digunakan!")
 	for !selesai{
 		fmt.Println("\n--- OOTD Planner ---")
 		fmt.Println("1. Tambah Item Fashion")
@@ -39,28 +63,28 @@ func main(){
 			cetakData(outfit, nData)
 		}else if pilih == 5{
 			editData(&outfit, &nData)
-			cetakData(outfit, nData)
-		}else if pilih == 6{
+		} else if pilih == 6 {
 			selesai = true
 		}
 	}
+	fmt.Println("Terima kasih! Hope you enjoy your outfit. See you!🥰")
 }
 
 func inputData(A *ootd, n *int){
 	var tambah int
 	fmt.Println("Berapa banyak item yang akan ditambahkan?")
 	fmt.Scan(&tambah) 
-	fmt.Println("Nama item(gunakan _ jika lebih dari 2 kata), Kategori(Atasan/Bawahan/Sepatu), Dan Acara(Formal/Kasual/Pesta): ")
 	for i := 0; i < tambah; i++{
+		fmt.Println("Nama item(gunakan _ jika lebih dari 2 kata), Kategori(Atasan/Bawahan/Sepatu), Dan Acara(Formal/Kasual/Pesta): ")
 		fmt.Scan(&A[*n].nama, &A[*n].kategori, &A[*n].acara)
+		fmt.Println("Input berhasil 😊")
 		*n++
 	}
-	fmt.Println("Input berhasil 😊")
 	fmt.Printf("Total item sekarang : %d\n", *n)
 }
 
 func cetakData(A ootd, n int){
-    fmt.Printf("%-20s %-15s %-15s\n", "Nama Item", "Kategori", "Acara")
+   fmt.Printf("%-20s %-15s %-15s\n", "Nama Item", "Kategori", "Acara")
 	for i := 0; i < 51; i++ {
         fmt.Print("-")
     }
@@ -71,10 +95,27 @@ func cetakData(A ootd, n int){
 }
 
 func urutData(A *ootd, n int) {
-	var target string
-	fmt.Printf("Diurutkan Berdasarkan? (Kategori / Acara)\n")
-	fmt.Scan(&target)
-	if target == "Kategori" {
+	var pilihan string
+	fmt.Printf("Diurutkan berdasarkan apa? (Nama / Kategori / Acara): ")
+	fmt.Scan(&pilihan)
+
+	if pilihan == "Nama" {
+		// Selection sort berdasarkan nama
+		for i := 0; i < n-1; i++ {
+			idxMin := i
+			for j := i + 1; j < n; j++ {
+				if A[j].nama < A[idxMin].nama {
+					idxMin = j
+				}
+			}
+			if idxMin != i {
+				temp := A[i]
+				A[i] = A[idxMin]
+				A[idxMin] = temp
+			}
+		}
+	} else if pilihan == "Kategori" {
+		// Insertion sort berdasarkan kategori
 		for i := 1; i < n; i++ {
 			temp := A[i]
 			j := i
@@ -84,7 +125,8 @@ func urutData(A *ootd, n int) {
 			}
 			A[j] = temp
 		}
-	}else if target == "Acara" {
+	} else if pilihan == "Acara" {
+		// Selection sort berdasarkan acara
 		for i := 0; i < n-1; i++ {
 			idxMin := i
 			for j := i + 1; j < n; j++ {
@@ -92,17 +134,18 @@ func urutData(A *ootd, n int) {
 					idxMin = j
 				}
 			}
-			temp := A[i]
-			A[i] = A[idxMin]
-			A[idxMin] = temp
+			if idxMin != i {
+				temp := A[i]
+				A[i] = A[idxMin]
+				A[idxMin] = temp
+			}
 		}
-	}
+	} 
 }
 
 func rekomendasi(A ootd, n int) {
 	var targetAcara string
-	var atasanShown, bawahanShown, sepatuShown bool
-	var i int
+	var ditemukan bool = false
 
 	fmt.Print("Masukkan jenis acara (cth: Formal, Kasual, Pesta): ")
 	fmt.Scan(&targetAcara)
@@ -116,20 +159,15 @@ func rekomendasi(A ootd, n int) {
 	fmt.Println()
 
 
-	for i < n && !(atasanShown && bawahanShown && sepatuShown) {
+	for i := 0; i < n; i++ {
 		if A[i].acara == targetAcara {
-			if A[i].kategori == "Atasan" && !atasanShown {
-				fmt.Printf("%-20s %-15s %-15s\n", A[i].nama, A[i].kategori, A[i].acara)
-				atasanShown = true
-			} else if A[i].kategori == "Bawahan" && !bawahanShown {
-				fmt.Printf("%-20s %-15s %-15s\n", A[i].nama, A[i].kategori, A[i].acara)
-				bawahanShown = true
-			} else if A[i].kategori == "Sepatu" && !sepatuShown {
-				fmt.Printf("%-20s %-15s %-15s\n", A[i].nama, A[i].kategori, A[i].acara)
-				sepatuShown = true
-			}
+			fmt.Printf("%-20s %-15s %-15s\n", A[i].nama, A[i].kategori, A[i].acara)
+			ditemukan = true
 		}
-		i++
+	}
+
+	if !ditemukan {
+		fmt.Printf("Tidak ditemukan item yang cocok untuk acara '%s'.\n", targetAcara)
 	}
 }
 
