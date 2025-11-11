@@ -1,3 +1,5 @@
+Created by : Ihsan Dwika Putra & Shasha Shany Azahra
+
 👗👕 OOTD Planner 👖👟
 Aplikasi manajemen outfit harian! ✨
 
